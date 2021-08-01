@@ -1,0 +1,51 @@
+name: MConomy
+version: 0.0.1
+author: Jean Nunes
+main: software.juno.mc.economy.MConomy
+api-version: 1.13
+commands:
+  banco:
+    description: "Realiza transações no seu banco"
+    usage: "/bank - vê quantas esmeraldas você tem no banco"
+  criar:
+    description: "Spawna um villager com uma profissão específica"
+    permission: mconomy.*
+  setjob:
+    description: "Define um trabalho para o player"
+    usage: "/setjob lumberjack - para trabalhar como lenhador"
+  transporte:
+    description: "Teleporta para outro player usando o ticket de transporte"
+permissions:
+  mconomy.*:
+    description: "Dá acesso a todos os comandos do MConomy"
+    children:
+      mconomy.farmer: true
+      mconomy.lumberjack: true
+      mconomy.metallurgist: true
+      mconomy.agriculturist: true
+      mconomy.miner: true
+      mconomy.cook: true
+      mconomy.warrior: true
+      mconomy.wizard: true
+      mconomy.blacksmith: true
+      mconomy.joiner: true
+  mconomy.farmer:
+    description: "Permite trabalhar como fazendeiro"
+  mconomy.metallurgist:
+    description: "Permite trabalhar como metalurgico"
+  mconomy.agriculturist:
+    description: "Permite trabalhar como agricultor"
+  mconomy.lumberjack:
+    description: "Permite trabalhar como lenhador"
+  mconomy.miner:
+    description: "Permite trabalhar como minerador"
+  mconomy.cook:
+    description: "Permite trabalhar como cozinheiro"
+  mconomy.warrior:
+    description: "Permite trabalhar como guerreiro"
+  mconomy.wizard:
+    description: "Permite trabalhar como bruxo"
+  mconomy.blacksmith:
+    description: "Permite trabalhar como ferreiro"
+  mconomy.joiner:
+    description: "Permite trabalhar como marceneiro"

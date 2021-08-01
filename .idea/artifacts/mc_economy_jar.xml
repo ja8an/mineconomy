@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="mc-economy:jar">
+    <output-path>$USER_HOME$/OneDrive - Grupo Marista/Documents/mcpaper/plugins</output-path>
+    <root id="archive" name="mc-economy.jar">
+      <element id="module-output" name="mc-economy" />
+      <element id="library" level="project" name="Maven: com.j256.ormlite:ormlite-jdbc:5.6" />
+      <element id="library" level="project" name="Maven: com.j256.ormlite:ormlite-core:5.6" />
+      <element id="jpa-descriptors" facet="mc-economy/jpa/JPA" />
+    </root>
+  </artifact>
+</component>
