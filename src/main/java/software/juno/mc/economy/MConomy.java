@@ -49,7 +49,7 @@ public class MConomy extends JavaPlugin implements Listener {
         Objects.requireNonNull(getCommand("banco")).setExecutor(new BankCommand(this));
         Objects.requireNonNull(getCommand("t")).setExecutor(new TransportCommand(this));
 
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new SalaryScheduler(this), 0, 6000);
+        getServer().getScheduler().runTaskTimerAsynchronously(this, new SalaryScheduler(this), 0, 6000);
 
     }
 
@@ -122,7 +122,7 @@ public class MConomy extends JavaPlugin implements Listener {
                 db.getPlayerDAO().addToPlayerInventory(player, new ItemStack(m, qtd));
             }
         } else if ("setjob".equalsIgnoreCase(command.getName())) {
-            if (args != null && args.length != 1) {
+            if (args.length != 1) {
                 player.sendMessage("Você precisa dizer qual profissão");
                 return false;
             }
