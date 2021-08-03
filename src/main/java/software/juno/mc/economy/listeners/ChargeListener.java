@@ -68,8 +68,6 @@ public class ChargeListener extends BaseListener {
                 }
 
             }
-        } else if (Action.RIGHT_CLICK_BLOCK.equals(action) && item != null) {
-
         }
     }
 
