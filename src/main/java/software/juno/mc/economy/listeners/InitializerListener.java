@@ -6,17 +6,18 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import software.juno.mc.economy.MConomy;
+import software.juno.mc.economy.annotations.Listener;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
 
 import java.util.Objects;
 import java.util.logging.Logger;
 
+@Listener
 public class InitializerListener extends BaseListener {
 
     public InitializerListener(MConomy mConomy) {

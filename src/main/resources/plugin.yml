@@ -6,17 +6,17 @@ api-version: 1.13
 commands:
   banco:
     description: "Realiza transações no seu banco"
-    usage: "/bank - vê quantas esmeraldas você tem no banco"
+    usage: "/banco - vê quantas esmeraldas você tem no banco"
   criar:
     description: "Spawna um villager com uma profissão específica"
     permission: mconomy.*
-  cobrar:
-    description: "Envia um ticket de cobrança para outro player"
   setjob:
     description: "Define um trabalho para o player"
     usage: "/setjob lumberjack - para trabalhar como lenhador"
   t:
     description: "Teleporta para outro player usando o ticket de transporte"
+  test:
+    description: "Test function"
 permissions:
   mconomy.*:
     description: "Dá acesso a todos os comandos do MConomy"

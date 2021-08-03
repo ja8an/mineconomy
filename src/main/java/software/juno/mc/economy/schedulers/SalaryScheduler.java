@@ -3,10 +3,12 @@ package software.juno.mc.economy.schedulers;
 import org.bukkit.entity.Player;
 import software.juno.mc.economy.BaseApp;
 import software.juno.mc.economy.MConomy;
+import software.juno.mc.economy.annotations.Scheduled;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.ItemUtils;
 
-public class SalaryScheduler extends BaseApp implements Runnable {
+@Scheduled(6000)
+public class SalaryScheduler extends BaseScheduler {
 
     public SalaryScheduler(MConomy mConomy) {
         super(mConomy);

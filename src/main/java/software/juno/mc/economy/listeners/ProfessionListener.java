@@ -4,13 +4,13 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import software.juno.mc.economy.MConomy;
+import software.juno.mc.economy.annotations.Listener;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.ItemUtils;
 import software.juno.mc.economy.utils.RandUtils;
@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Listener
 public class ProfessionListener extends BaseListener {
 
     public ProfessionListener(MConomy mConomy) {

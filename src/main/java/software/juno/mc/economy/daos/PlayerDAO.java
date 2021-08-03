@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
+import software.juno.mc.economy.utils.PlayerUtils;
 
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -17,6 +18,13 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
         super(connectionSource, playerDataClass, logger);
     }
 
+
+    /**
+     * Find player data by username
+     *
+     * @param name Player's username
+     * @return Player's data
+     */
     public PlayerData findByName(String name) {
         logger.info("FindByName " + name);
         PlayerData playerData = findById(name);
@@ -24,6 +32,12 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
         return playerData;
     }
 
+    /**
+     * Finds player data by player object
+     *
+     * @param player Current player
+     * @return Player's data
+     */
     @SneakyThrows
     public PlayerData findByPlayer(Player player) {
         String name = player.getName();
@@ -35,18 +49,31 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
             playerData.setMoney(0);
             playerData.setProfession(Profession.UNEMPLOYED);
             create(playerData);
-            addToPlayerInventoryIfNotContains(player, Profession.UNEMPLOYED.getStartItems().toArray(new ItemStack[0]));
+            PlayerUtils.addStartItems(player, Profession.UNEMPLOYED);
             return findByName(name);
         }
         return playerData;
     }
 
+    /**
+     * Credits certain amount of emeralds to player
+     *
+     * @param player Current player
+     * @param amount Amount of emeralds
+     */
     public void cashPlayer(Player player, int amount) {
         PlayerData playerData = findById(player.getName());
         playerData.setMoney(playerData.getMoney() + amount);
         update(playerData);
     }
 
+    /**
+     * Charges the player in defined amount of emeralds
+     *
+     * @param player Current player
+     * @param amount Amount of emeralds
+     * @return true if the player was successfully charged
+     */
     public boolean chargePlayer(Player player, int amount) {
         PlayerData playerData = findById(player.getName());
         if (playerData.getMoney() >= amount) {
@@ -57,21 +84,5 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
         return false;
     }
 
-    public void addToPlayerInventory(Player player, ItemStack... itemStack) {
-        Inventory inventory = player.getInventory();
-        if (itemStack != null)
-            for (ItemStack stack : itemStack) {
-                inventory.addItem(stack);
-            }
-    }
-
-    public void addToPlayerInventoryIfNotContains(Player player, ItemStack... itemStack) {
-        Inventory inventory = player.getInventory();
-        if (itemStack != null)
-            for (ItemStack stack : itemStack) {
-                if (!inventory.contains(stack.getType()))
-                    inventory.addItem(stack);
-            }
-    }
 
 }

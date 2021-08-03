@@ -4,21 +4,24 @@ import lombok.SneakyThrows;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
+import software.juno.mc.economy.annotations.CommandExecutor;
+import software.juno.mc.economy.annotations.Listener;
+import software.juno.mc.economy.annotations.Scheduled;
 import software.juno.mc.economy.commands.BankCommand;
+import software.juno.mc.economy.commands.BaseCommand;
 import software.juno.mc.economy.commands.TransportCommand;
 import software.juno.mc.economy.daos.DB;
-import software.juno.mc.economy.listeners.ChargeListener;
-import software.juno.mc.economy.listeners.FurnaceListener;
-import software.juno.mc.economy.listeners.InitializerListener;
-import software.juno.mc.economy.listeners.ProfessionListener;
+import software.juno.mc.economy.listeners.*;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
+import software.juno.mc.economy.schedulers.BaseScheduler;
 import software.juno.mc.economy.schedulers.SalaryScheduler;
 import software.juno.mc.economy.utils.ItemUtils;
 import software.juno.mc.economy.utils.PlayerUtils;
@@ -26,7 +29,7 @@ import software.juno.mc.economy.utils.PlayerUtils;
 import java.sql.SQLException;
 import java.util.*;
 
-public class MConomy extends JavaPlugin implements Listener {
+public class MConomy extends JavaPlugin {
 
     public static DB db;
 
@@ -45,15 +48,31 @@ public class MConomy extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("onEnable has been invoked!");
 
-        getServer().getPluginManager().registerEvents(new InitializerListener(this), this);
-        getServer().getPluginManager().registerEvents(new ProfessionListener(this), this);
-        getServer().getPluginManager().registerEvents(new ChargeListener(this), this);
-        getServer().getPluginManager().registerEvents(new FurnaceListener(this), this);
+        Reflections reflections = new Reflections("software.juno.mc.economy");
 
-        Objects.requireNonNull(getCommand("banco")).setExecutor(new BankCommand(this));
-        Objects.requireNonNull(getCommand("t")).setExecutor(new TransportCommand(this));
+        Set<Class<? extends BaseListener>> listeners = reflections.getSubTypesOf(BaseListener.class);
 
-        getServer().getScheduler().runTaskTimerAsynchronously(this, new SalaryScheduler(this), 0, 6000);
+        for (Class<? extends BaseListener> listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener.getDeclaredConstructor(MConomy.class).newInstance(this), this);
+        }
+
+        Set<Class<? extends BaseCommand>> commands = reflections.getSubTypesOf(BaseCommand.class);
+
+        for (Class<? extends BaseCommand> command : commands) {
+            CommandExecutor commandExecutor = command.getAnnotation(CommandExecutor.class);
+            String time = commandExecutor != null ? commandExecutor.value() : command.getSimpleName().replace("Command", "").toLowerCase(Locale.ROOT);
+            PluginCommand pluginCommand = getCommand(time);
+            if (pluginCommand != null)
+                pluginCommand.setExecutor(command.getDeclaredConstructor(MConomy.class).newInstance(this));
+        }
+
+        Set<Class<? extends BaseScheduler>> schedulers = reflections.getSubTypesOf(BaseScheduler.class);
+
+        for (Class<? extends BaseScheduler> scheduler : schedulers) {
+            Scheduled scheduled = scheduler.getAnnotation(Scheduled.class);
+            int time = scheduled != null ? scheduled.value() : 100;
+            getServer().getScheduler().runTaskTimerAsynchronously(this, scheduler.getDeclaredConstructor(MConomy.class).newInstance(this), 0, time);
+        }
 
     }
 
@@ -79,11 +98,7 @@ public class MConomy extends JavaPlugin implements Listener {
         Player player = (Player) sender;
         PlayerData playerID = db.getPlayerDAO().findByName(player.getName());
 
-        if ("cobrar".equalsIgnoreCase(command.getName())) {
-            int qtd = Integer.parseInt(args[0]);
-            player.getInventory().addItem(ItemUtils.chargeBlock(player, qtd));
-            return true;
-        } else if (command.getName().equalsIgnoreCase("criar")) {
+        if (command.getName().equalsIgnoreCase("criar")) {
             String oque = args[0];
             if ("keeper".equalsIgnoreCase(oque)) {
 
@@ -123,7 +138,7 @@ public class MConomy extends JavaPlugin implements Listener {
                 String item = args[1];
                 int qtd = Integer.parseInt(args.length > 2 ? args[2] : "1");
                 Material m = Material.valueOf(item.toUpperCase(Locale.ROOT));
-                db.getPlayerDAO().addToPlayerInventory(player, new ItemStack(m, qtd));
+                PlayerUtils.addToPlayerInventory(player, new ItemStack(m, qtd));
             }
         } else if ("setjob".equalsIgnoreCase(command.getName())) {
 
@@ -137,13 +152,13 @@ public class MConomy extends JavaPlugin implements Listener {
 
             if (Profession.UNEMPLOYED.equals(profAtual)) {
                 playerID.setProfession(prof);
-                db.getPlayerDAO().addToPlayerInventoryIfNotContains(player, prof.getStartItems().toArray(new ItemStack[0]));
+                PlayerUtils.addStartItems(player, prof);
                 db.getPlayerDAO().update(playerID);
                 return true;
             } else {
                 if (PlayerUtils.isGod(player) && db.getPlayerDAO().chargePlayer(player, 10000)) {
                     playerID.setProfession(prof);
-                    db.getPlayerDAO().addToPlayerInventoryIfNotContains(player, prof.getStartItems().toArray(new ItemStack[0]));
+                    PlayerUtils.addStartItems(player, prof);
                     db.getPlayerDAO().update(playerID);
                     return true;
                 } else {
