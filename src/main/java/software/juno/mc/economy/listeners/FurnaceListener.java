@@ -11,6 +11,7 @@ import software.juno.mc.economy.annotations.Listener;
 import software.juno.mc.economy.models.enums.Profession;
 
 import java.util.List;
+import java.util.Objects;
 
 @Listener
 public class FurnaceListener extends BaseListener {
@@ -28,9 +29,11 @@ public class FurnaceListener extends BaseListener {
         getLogger().info("Player in inventory " + player.getName());
         Profession profession = MConomy.getProfession(player.getName());
 
-        getLogger().info("Inventory type " + e.getClickedInventory().getType());
+        if (Objects.nonNull(e.getClickedInventory()))
+            getLogger().info("Inventory type " + e.getClickedInventory().getType());
         getLogger().info("From " + e.getView().getType());
-        getLogger().info("Item " + e.getCurrentItem().getType());
+        if (Objects.nonNull(e.getCurrentItem()))
+            getLogger().info("Item " + e.getCurrentItem().getType());
         getLogger().info("To player" + e.getView().getPlayer());
 
         ItemStack itemStack = e.getCurrentItem();
