@@ -35,7 +35,7 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
             playerData.setMoney(0);
             playerData.setProfession(Profession.UNEMPLOYED);
             create(playerData);
-            addToPlayerInventory(player, Profession.UNEMPLOYED.getStartItems().toArray(new ItemStack[0]));
+            addToPlayerInventoryIfNotContains(player, Profession.UNEMPLOYED.getStartItems().toArray(new ItemStack[0]));
             return findByName(name);
         }
         return playerData;

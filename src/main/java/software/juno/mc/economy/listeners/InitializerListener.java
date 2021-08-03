@@ -17,12 +17,10 @@ import software.juno.mc.economy.models.enums.Profession;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class InitializerListener implements Listener {
+public class InitializerListener extends BaseListener {
 
-    private final Logger logger;
-
-    public InitializerListener(Logger logger) {
-        this.logger = logger;
+    public InitializerListener(MConomy mConomy) {
+        super(mConomy);
     }
 
     @SneakyThrows
@@ -31,7 +29,7 @@ public class InitializerListener implements Listener {
         Player p = event.getPlayer();
         PlayerData playerData = MConomy.db.getPlayerDAO().findByPlayer(p);
         event.setJoinMessage(playerData.getName() + ChatColor.YELLOW + " chegou na cidade!");
-        logger.info(p.getName() + ": " + p.getUniqueId());
+        getLogger().info(p.getName() + ": " + p.getUniqueId());
     }
 
     @EventHandler

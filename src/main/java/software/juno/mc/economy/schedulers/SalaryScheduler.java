@@ -1,6 +1,7 @@
-package software.juno.mc.economy;
+package software.juno.mc.economy.schedulers;
 
 import org.bukkit.entity.Player;
+import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.ItemUtils;
 

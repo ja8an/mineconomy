@@ -10,14 +10,17 @@ commands:
   criar:
     description: "Spawna um villager com uma profissão específica"
     permission: mconomy.*
+  cobrar:
+    description: "Envia um ticket de cobrança para outro player"
   setjob:
     description: "Define um trabalho para o player"
     usage: "/setjob lumberjack - para trabalhar como lenhador"
-  transporte:
+  t:
     description: "Teleporta para outro player usando o ticket de transporte"
 permissions:
   mconomy.*:
     description: "Dá acesso a todos os comandos do MConomy"
+    default: op
     children:
       mconomy.farmer: true
       mconomy.lumberjack: true
