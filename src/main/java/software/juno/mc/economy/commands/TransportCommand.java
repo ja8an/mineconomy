@@ -6,6 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
@@ -44,10 +46,12 @@ public class TransportCommand extends BaseCommand {
             if (outroPlayer != null) {
 
                 if (Profession.WIZARD.equals(playerID.getProfession())) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 600, 0));
                     player.teleport(outroPlayer);
                 } else if (player.getInventory().contains(Material.PAPER)) {
                     Optional<ItemStack> stack = Arrays.stream(player.getInventory().getContents()).filter(itemStack -> ItemUtils.TRANSPORT_TICKET.equalsIgnoreCase(Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName())).findFirst();
                     if (stack.isPresent()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 600, 0));
                         player.getInventory().remove(stack.get());
                         player.teleport(outroPlayer);
                     } else {

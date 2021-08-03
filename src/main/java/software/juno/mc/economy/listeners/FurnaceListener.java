@@ -21,6 +21,9 @@ public class FurnaceListener extends BaseListener {
     @EventHandler
     public void permissions(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
+
+        if (isGod(player)) return;
+
         getLogger().info("Player in inventory " + player.getName());
         Profession profession = MConomy.getProfession(player.getName());
 

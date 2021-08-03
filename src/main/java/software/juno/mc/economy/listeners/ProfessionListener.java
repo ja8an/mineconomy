@@ -29,7 +29,11 @@ public class ProfessionListener extends BaseListener {
 
     @EventHandler
     public void onMobKill(EntityDeathEvent event) {
+
+
         Player killer = event.getEntity().getKiller();
+
+        if (isGod(killer)) return;
 
         if (killer != null) {
 
@@ -46,7 +50,7 @@ public class ProfessionListener extends BaseListener {
                     event.getDrops().clear();
                     if (EntityType.ENDERMAN.equals(event.getEntityType())) {
                         event.getDrops().add(ItemUtils.transportTicket(25));
-                    } else if (RandUtils.rollDice(3, 15, getLogger())) {
+                    } else if (RandUtils.rollDice(1, 5)) {
                         event.getDrops().add(ItemUtils.transportTicket(1));
                     }
                 } else if (!profession.canKill(event.getEntityType())) {
@@ -67,6 +71,8 @@ public class ProfessionListener extends BaseListener {
             if (entity instanceof Player) {
                 Player player = (Player) entity;
 
+                if (isGod(player)) continue;
+
                 Profession profession = MConomy.getProfession(player.getName());
 
                 if (!profession.canCraft(event.getRecipe().getResult().getType())) {
@@ -80,6 +86,9 @@ public class ProfessionListener extends BaseListener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
+
+        if (isGod(player)) return;
+
         getLogger().info("Trying to break " + event.getBlock().getType());
         Profession profession = MConomy.getProfession(player.getName());
         boolean canBreak = profession.canBreak(event.getBlock().getType());

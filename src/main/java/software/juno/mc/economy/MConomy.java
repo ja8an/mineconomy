@@ -21,6 +21,7 @@ import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.schedulers.SalaryScheduler;
 import software.juno.mc.economy.utils.ItemUtils;
+import software.juno.mc.economy.utils.PlayerUtils;
 
 import java.util.*;
 
@@ -112,6 +113,9 @@ public class MConomy extends JavaPlugin implements Listener {
 
                 return true;
             } else if ("item".equalsIgnoreCase(oque)) {
+
+                if (!PlayerUtils.isGod(player)) return false;
+
                 String item = args[1];
                 int qtd = Integer.parseInt(args.length > 2 ? args[2] : "1");
                 Material m = Material.valueOf(item.toUpperCase(Locale.ROOT));
@@ -131,7 +135,7 @@ public class MConomy extends JavaPlugin implements Listener {
                 db.getPlayerDAO().update(playerID);
                 return true;
             } else {
-                if (db.getPlayerDAO().chargePlayer(player, 10000)) {
+                if (PlayerUtils.isGod(player) && db.getPlayerDAO().chargePlayer(player, 10000)) {
                     playerID.setProfession(prof);
                     db.getPlayerDAO().addToPlayerInventoryIfNotContains(player, prof.getStartItems().toArray(new ItemStack[0]));
                     db.getPlayerDAO().update(playerID);

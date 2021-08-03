@@ -53,7 +53,7 @@ public class ChargeListener extends BaseListener {
                         return;
                     }
 
-                    if (MConomy.db.getPlayerDAO().chargePlayer(player, qtd)) {
+                    if (isGod(player) || MConomy.db.getPlayerDAO().chargePlayer(player, qtd)) {
                         MConomy.db.getPlayerDAO().cashPlayer(outro, qtd);
                         player.sendMessage("Você pagou " + qtd + " esmeraldas para " + outro.getName());
                         outro.sendMessage(player.getName() + " te pagou " + qtd + " esmeraldas");
