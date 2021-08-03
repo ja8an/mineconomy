@@ -11,18 +11,8 @@ import java.util.logging.Logger;
 
 public abstract class BaseListener extends BaseApp implements Listener {
 
-    protected final MConomy mConomy;
-
     public BaseListener(MConomy mConomy) {
-        this.mConomy = mConomy;
-    }
-
-    public Logger getLogger() {
-        return mConomy.getLogger();
-    }
-
-    public Server getServer() {
-        return mConomy.getServer();
+        super(mConomy);
     }
 
 }

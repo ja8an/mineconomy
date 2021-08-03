@@ -23,11 +23,17 @@ import software.juno.mc.economy.schedulers.SalaryScheduler;
 import software.juno.mc.economy.utils.ItemUtils;
 import software.juno.mc.economy.utils.PlayerUtils;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class MConomy extends JavaPlugin implements Listener {
 
     public static DB db;
+
+    public MConomy() throws SQLException {
+        super();
+        MConomy.db = DB.connect("jdbc:sqlite:data.db", getLogger());
+    }
 
     @Override
     public void onDisable() {
@@ -38,8 +44,6 @@ public class MConomy extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getLogger().info("onEnable has been invoked!");
-
-        db = DB.connect("jdbc:sqlite:data.db", getLogger());
 
         getServer().getPluginManager().registerEvents(new InitializerListener(this), this);
         getServer().getPluginManager().registerEvents(new ProfessionListener(this), this);
@@ -122,10 +126,12 @@ public class MConomy extends JavaPlugin implements Listener {
                 db.getPlayerDAO().addToPlayerInventory(player, new ItemStack(m, qtd));
             }
         } else if ("setjob".equalsIgnoreCase(command.getName())) {
+
             if (args.length != 1) {
                 player.sendMessage("Você precisa dizer qual profissão");
                 return false;
             }
+
             Profession prof = Profession.valueOf(args[0]);
             Profession profAtual = getProfession(player.getName());
 

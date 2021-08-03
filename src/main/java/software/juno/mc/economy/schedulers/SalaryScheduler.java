@@ -1,21 +1,20 @@
 package software.juno.mc.economy.schedulers;
 
 import org.bukkit.entity.Player;
+import software.juno.mc.economy.BaseApp;
 import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.ItemUtils;
 
-public class SalaryScheduler implements Runnable {
-
-    final MConomy mConomy;
+public class SalaryScheduler extends BaseApp implements Runnable {
 
     public SalaryScheduler(MConomy mConomy) {
-        this.mConomy = mConomy;
+        super(mConomy);
     }
 
     @Override
     public void run() {
-        for (Player onlinePlayer : mConomy.getServer().getOnlinePlayers()) {
+        for (Player onlinePlayer : getServer().getOnlinePlayers()) {
             int amount = 50 * (1 + (onlinePlayer.getLevel() / 10));
             MConomy.db.getPlayerDAO().cashPlayer(onlinePlayer, amount);
             if (Profession.WIZARD.equals(MConomy.getProfession(onlinePlayer.getName()))) {
