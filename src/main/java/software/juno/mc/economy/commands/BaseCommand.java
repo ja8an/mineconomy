@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import software.juno.mc.economy.BaseApp;
 import software.juno.mc.economy.MConomy;
+import software.juno.mc.economy.exceptions.CommandException;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -50,8 +51,6 @@ public abstract class BaseCommand extends BaseApp implements CommandExecutor {
             Method declaredMethod;
 
             try {
-
-
                 declaredMethod = getClass().getDeclaredMethod(name, typed.toArray(new Class[0]));
             } catch (Exception e) {
                 getLogger().log(Level.SEVERE, e.getMessage());
@@ -82,12 +81,19 @@ public abstract class BaseCommand extends BaseApp implements CommandExecutor {
 
             getLogger().info("Response " + response);
 
+            // This should never happen, it's just to remove the warning
+            if ("THROWS_FUCKING_EXCEPTION".equalsIgnoreCase(String.valueOf(response)))
+                throw new CommandException(String.valueOf(response));
+
             if (Void.class.equals(declaredMethod.getReturnType())) {
                 return true;
             } else {
-                return (boolean) response;
+                return Boolean.parseBoolean(String.valueOf(response));
             }
 
+        } catch (CommandException commandException) {
+            sender.sendMessage(commandException.getMessage());
+            return true;
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, e.getMessage());
         }
