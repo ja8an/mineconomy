@@ -1,9 +1,12 @@
 package software.juno.mc.economy.utils;
 
+import lombok.SneakyThrows;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import software.juno.mc.economy.MConomy;
+import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
 
 public class PlayerUtils {
@@ -42,6 +45,15 @@ public class PlayerUtils {
 
     public static void addStartItems(Player player, Profession profession) {
         addToPlayerInventoryIfNotContains(player, profession.getStartItems().toArray(new ItemStack[0]));
+    }
+
+    @SneakyThrows
+    public static Profession getProfession(String name) {
+        PlayerData playerID = MConomy.db.getPlayerDAO().findByName(name);
+        if (playerID == null) {
+            return Profession.UNEMPLOYED;
+        }
+        return playerID.getProfession();
     }
 
 }
