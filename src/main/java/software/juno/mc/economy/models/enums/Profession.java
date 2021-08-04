@@ -52,8 +52,13 @@ public enum Profession {
                     Material.RED_SAND,
                     Material.GRASS_BLOCK,
                     Material.GRASS,
+                    Material.TALL_GRASS,
                     Material.CACTUS,
-                    Material.DANDELION
+                    Material.DANDELION,
+                    Material.DIRT,
+                    Material.FARMLAND,
+                    Material.POPPY,
+                    Material.CORNFLOWER
             },
             // Start items
             new ItemStack[]{

@@ -88,9 +88,15 @@ public class ProfessionListener extends BaseListener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
+        ItemStack itemStack = player.getItemInUse();
+
         if (isGod(player)) return;
 
         getLogger().info("Trying to break " + event.getBlock().getType());
+
+        if (itemStack != null)
+            getLogger().info("Breaking with " + itemStack.getType());
+
         Profession profession = MConomy.getProfession(player.getName());
         boolean canBreak = profession.canBreak(event.getBlock().getType());
         if (!canBreak) {
