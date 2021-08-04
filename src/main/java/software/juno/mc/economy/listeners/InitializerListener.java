@@ -36,7 +36,7 @@ public class InitializerListener extends BaseListener {
     @EventHandler
     public void sleep(PlayerBedEnterEvent event) {
         Player p = event.getPlayer();
-        Profession profession = MConomy.getProfession(p.getName());
+        Profession profession = getProfession(p.getName());
         if (Profession.WARRIOR.equals(profession)) {
             Objects.requireNonNull(p.getLocation().getWorld()).setTime(0L);
         }

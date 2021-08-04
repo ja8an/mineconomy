@@ -3,7 +3,9 @@ package software.juno.mc.economy;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import software.juno.mc.economy.daos.DB;
+import software.juno.mc.economy.listeners.ProfessionListener;
 import software.juno.mc.economy.models.entities.PlayerData;
+import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.PlayerUtils;
 
 import java.util.logging.Logger;
@@ -18,6 +20,10 @@ public abstract class BaseApp {
 
     public PlayerData getPlayerData(Player player) {
         return MConomy.db.getPlayerDAO().findByPlayer(player);
+    }
+
+    public Profession getProfession(String name) {
+        return PlayerUtils.getProfession(name);
     }
 
     public Logger getLogger() {

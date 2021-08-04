@@ -27,7 +27,7 @@ public class FurnaceListener extends BaseListener {
         if (isGod(player)) return;
 
         getLogger().info("Player in inventory " + player.getName());
-        Profession profession = MConomy.getProfession(player.getName());
+        Profession profession = getProfession(player.getName());
 
         if (Objects.nonNull(e.getClickedInventory()))
             getLogger().info("Inventory type " + e.getClickedInventory().getType());

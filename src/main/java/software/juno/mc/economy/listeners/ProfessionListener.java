@@ -38,11 +38,12 @@ public class ProfessionListener extends BaseListener {
 
         if (killer != null) {
 
+            Profession profession = getProfession(killer.getName());
+
             getLogger().info(killer + " killed a " + event.getEntityType());
             getLogger().info("Entity category " + event.getEntity().getCategory());
 
             if (event.getEntity() instanceof Monster) {
-                Profession profession = MConomy.getProfession(killer.getName());
 
                 if (!Profession.WARRIOR.equals(profession))
                     event.setDroppedExp(0);
@@ -69,12 +70,11 @@ public class ProfessionListener extends BaseListener {
         getLogger().info("Player is trying to craft " + event.getRecipe().getResult().getType());
 
         for (HumanEntity entity : event.getViewers()) {
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
+            if (entity instanceof Player player) {
 
                 if (isGod(player)) continue;
 
-                Profession profession = MConomy.getProfession(player.getName());
+                Profession profession = getProfession(player.getName());
 
                 if (!profession.canCraft(event.getRecipe().getResult().getType())) {
                     event.setCancelled(true);
@@ -97,7 +97,7 @@ public class ProfessionListener extends BaseListener {
         if (itemStack != null)
             getLogger().info("Breaking with " + itemStack.getType());
 
-        Profession profession = MConomy.getProfession(player.getName());
+        Profession profession = getProfession(player.getName());
         boolean canBreak = profession.canBreak(event.getBlock().getType());
         if (!canBreak) {
             getLogger().info("Cannot break " + event.getBlock().getType());

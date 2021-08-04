@@ -45,6 +45,7 @@ public enum Profession {
                     Material.BONE_BLOCK
             },
             // Breakable items
+            // TODO check tool and item and action
             new Material[]{
                     Material.WHEAT,
                     Material.DEAD_BUSH,
