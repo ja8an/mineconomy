@@ -1,3 +1,5 @@
 # Excluded items
 /out
 /target
+/server/logs
+/server/crash-reports
