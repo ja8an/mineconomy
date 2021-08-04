@@ -53,12 +53,14 @@ public class MConomy extends JavaPlugin {
         Set<Class<? extends BaseListener>> listeners = reflections.getSubTypesOf(BaseListener.class);
 
         for (Class<? extends BaseListener> listener : listeners) {
+            getLogger().info("Listener " + listener.getSimpleName() + " carregado com sucesso!");
             getServer().getPluginManager().registerEvents(listener.getDeclaredConstructor(MConomy.class).newInstance(this), this);
         }
 
         Set<Class<? extends BaseCommand>> commands = reflections.getSubTypesOf(BaseCommand.class);
 
         for (Class<? extends BaseCommand> command : commands) {
+            getLogger().info("Command executor " + command.getSimpleName() + " carregado com sucesso!");
             CommandExecutor commandExecutor = command.getAnnotation(CommandExecutor.class);
             String time = commandExecutor != null ? commandExecutor.value() : command.getSimpleName().replace("Command", "").toLowerCase(Locale.ROOT);
             PluginCommand pluginCommand = getCommand(time);
@@ -69,40 +71,12 @@ public class MConomy extends JavaPlugin {
         Set<Class<? extends BaseScheduler>> schedulers = reflections.getSubTypesOf(BaseScheduler.class);
 
         for (Class<? extends BaseScheduler> scheduler : schedulers) {
+            getLogger().info("Scheduler " + scheduler.getSimpleName() + " carregado com sucesso!");
             Scheduled scheduled = scheduler.getAnnotation(Scheduled.class);
-            int time = scheduled != null ? scheduled.value() : 100;
+            int time = scheduled != null ? scheduled.value() : 1000;
             getServer().getScheduler().runTaskTimerAsynchronously(this, scheduler.getDeclaredConstructor(MConomy.class).newInstance(this), 0, time);
         }
 
     }
-
-    @SneakyThrows
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        getLogger().info("Issued command");
-
-        getLogger().info("Command " + command.getName());
-        getLogger().info("Label " + label);
-        getLogger().info("Args " + Arrays.asList(args));
-
-        Player player = (Player) sender;
-        PlayerData playerID = db.getPlayerDAO().findByName(player.getName());
-
-        if ("setjob".equalsIgnoreCase(command.getName())) {
-
-            if (args.length != 1) {
-                player.sendMessage("Você precisa dizer qual profissão");
-                return false;
-            }
-
-
-
-        }
-
-        return false;
-
-    }
-
 
 }

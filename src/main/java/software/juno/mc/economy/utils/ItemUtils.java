@@ -14,7 +14,7 @@ public class ItemUtils {
     private ItemUtils() {
     }
 
-    public static ItemStack transportTicket(){
+    public static ItemStack transportTicket() {
         return transportTicket(1);
     }
 
@@ -25,7 +25,7 @@ public class ItemUtils {
 
         if (meta != null) {
             meta.setDisplayName(TRANSPORT_TICKET);
-            meta.setLore(Arrays.asList("1 uso", "Use com /tp [playername]"));
+            meta.setLore(Arrays.asList("1 uso", "Use com /t [player]"));
             meta.setUnbreakable(true);
             stack.setItemMeta(meta);
         }

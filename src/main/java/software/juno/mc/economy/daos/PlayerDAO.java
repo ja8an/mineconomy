@@ -18,7 +18,6 @@ public class PlayerDAO extends BaseDAO<PlayerData, String> {
         super(connectionSource, playerDataClass, logger);
     }
 
-
     /**
      * Find player data by username
      *

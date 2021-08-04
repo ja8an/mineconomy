@@ -1,4 +1,4 @@
-package software.juno.mc.economy;
+package software.juno.mc.economy.utils;
 
 import java.util.Arrays;
 
@@ -16,8 +16,8 @@ import org.bukkit.plugin.Plugin;
 
 public class IconMenu implements Listener {
 
-    private String name;
-    private int size;
+    private final String name;
+    private final int size;
     private OptionClickEventHandler handler;
     private Plugin plugin;
 
@@ -82,10 +82,10 @@ public class IconMenu implements Listener {
         void onOptionClick(OptionClickEvent event);
     }
 
-    public class OptionClickEvent {
-        private Player player;
-        private int position;
-        private String name;
+    public static class OptionClickEvent {
+        private final Player player;
+        private final int position;
+        private final String name;
         private boolean close;
         private boolean destroy;
 

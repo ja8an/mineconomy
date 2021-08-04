@@ -19,7 +19,6 @@ public class DB {
     DB(String databaseUrl, Logger logger) throws SQLException {
         this.connectionSource = new JdbcConnectionSource(databaseUrl);
         this.logger = logger;
-
         this.playerDAO = new PlayerDAO(connectionSource, PlayerData.class, logger);
     }
 

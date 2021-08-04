@@ -21,6 +21,11 @@ public class JobsCommand extends BaseCommand {
     }
 
     public void index(Player player, String destinationPlayer, String profession) {
+
+        if (!player.getName().equals(destinationPlayer) && !isGod(player)) {
+            return;
+        }
+
         Profession prof;
         try {
             prof = Profession.valueOf(profession.toUpperCase(Locale.ROOT));
