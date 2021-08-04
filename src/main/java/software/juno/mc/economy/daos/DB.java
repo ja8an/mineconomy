@@ -2,7 +2,6 @@ package software.juno.mc.economy.daos;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import org.bukkit.entity.Player;
 import software.juno.mc.economy.models.entities.PlayerData;
 
 import java.sql.SQLException;

@@ -1,9 +1,7 @@
 package software.juno.mc.economy.listeners;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -14,7 +12,6 @@ import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.annotations.Listener;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Listener
 public class ChargeListener extends BaseListener {

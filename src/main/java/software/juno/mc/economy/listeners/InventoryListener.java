@@ -1,6 +1,5 @@
 package software.juno.mc.economy.listeners;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -10,13 +9,12 @@ import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.annotations.Listener;
 import software.juno.mc.economy.models.enums.Profession;
 
-import java.util.List;
 import java.util.Objects;
 
 @Listener
-public class FurnaceListener extends BaseListener {
+public class InventoryListener extends BaseListener {
 
-    public FurnaceListener(MConomy mConomy) {
+    public InventoryListener(MConomy mConomy) {
         super(mConomy);
     }
 

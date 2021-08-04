@@ -1,22 +1,13 @@
 package software.juno.mc.economy.commands;
 
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import software.juno.mc.economy.BaseApp;
 import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.annotations.CommandExecutor;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.ItemUtils;
-
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
 
 @CommandExecutor("t")
 public class TransportCommand extends BaseCommand {

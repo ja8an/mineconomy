@@ -1,7 +1,6 @@
 package software.juno.mc.economy.schedulers;
 
 import org.bukkit.entity.Player;
-import software.juno.mc.economy.BaseApp;
 import software.juno.mc.economy.MConomy;
 import software.juno.mc.economy.annotations.Scheduled;
 import software.juno.mc.economy.models.enums.Profession;
@@ -19,7 +18,7 @@ public class SalaryScheduler extends BaseScheduler {
         for (Player onlinePlayer : getServer().getOnlinePlayers()) {
             int amount = 50 * (1 + (onlinePlayer.getLevel() / 10));
             MConomy.db.getPlayerDAO().cashPlayer(onlinePlayer, amount);
-            if (Profession.WIZARD.equals(MConomy.getProfession(onlinePlayer.getName()))) {
+            if (Profession.WIZARD.equals(getProfession(onlinePlayer.getName()))) {
                 int qtd = 10 * (1 + (onlinePlayer.getLevel() / 10));
                 for (int i = 0; i < qtd; i++) {
                     onlinePlayer.getInventory().addItem(ItemUtils.transportTicket());

@@ -3,8 +3,6 @@ package software.juno.mc.economy.daos;
 import com.j256.ormlite.support.ConnectionSource;
 import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import software.juno.mc.economy.models.entities.PlayerData;
 import software.juno.mc.economy.models.enums.Profession;
 import software.juno.mc.economy.utils.PlayerUtils;
